@@ -104,12 +104,15 @@
 
     void RemoveConfiguredPizza(Pizza pizza)
     {
-    order.Pizzas.Remove(pizza);
+        order.Pizzas.Remove(pizza);
     }
 
     async Task PlaceOrder()
     {
-    await HttpClient.PostAsJsonAsync("orders", order);
-    order = new Order();
+
+        await HttpClient.PostAsJsonAsync("orders", order);
+        order = new Order();
+
+        Console.WriteLine(order);
     }
 }

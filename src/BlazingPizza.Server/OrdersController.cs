@@ -9,7 +9,7 @@ namespace BlazingPizza.Server;
 
 [Route("orders")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class OrdersController : Controller
 {
     private readonly PizzaStoreContext _db;
@@ -22,6 +22,8 @@ public class OrdersController : Controller
     [HttpGet]
     public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
     {
+        Console.WriteLine("ophalen");
+
         var orders = await _db.Orders
                 .Where(o => o.UserId == GetUserId())
                 .Include(o => o.DeliveryLocation)
@@ -55,8 +57,11 @@ public class OrdersController : Controller
     [HttpPost]
     public async Task<ActionResult<int>> PlaceOrder(Order order)
     {
+        Console.WriteLine(order);
+        Console.WriteLine("kom k hier??");
+
         order.CreatedTime = DateTime.Now;
-        order.DeliveryLocation = new LatLong(51.5001, -0.1239);
+        //order.DeliveryLocation = new LatLong(51.5001, -0.1239);
         order.UserId = GetUserId();
 
         // Enforce existence of Pizza.SpecialId and Topping.ToppingId

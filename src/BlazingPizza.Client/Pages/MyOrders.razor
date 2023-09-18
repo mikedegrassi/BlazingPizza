@@ -39,13 +39,10 @@
         </div>
     }
 </div>
+
+
 @code {
     IEnumerable<OrderWithStatus> ordersWithStatus;
-
-    void Click()
-    {
-        Console.WriteLine(ordersWithStatus);
-    }
 
     protected override async Task OnParametersSetAsync()
     {
