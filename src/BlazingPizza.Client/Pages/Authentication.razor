@@ -2,13 +2,12 @@
 @inject OrderState OrderState
 @inject NavigationManager NavigationManager
 
-<RemoteAuthenticatorViewCore
-    TAuthenticationState="PizzaAuthenticationState"
-    AuthenticationState="RemoteAuthenticationState"
-    OnLogInSucceeded="RestorePizza"
-    Action="@Action" />
+<RemoteAuthenticatorViewCore TAuthenticationState="PizzaAuthenticationState"
+                             AuthenticationState="RemoteAuthenticationState"
+                             OnLogInSucceeded="RestorePizza"
+                             Action="@Action" />
 
-@code{
+@code {
     [Parameter] public string Action { get; set; }
 
     public PizzaAuthenticationState RemoteAuthenticationState { get; set; } = new PizzaAuthenticationState();

@@ -10,6 +10,22 @@ public class OrderState
 
     public Order Order { get; private set; } = new Order();
 
+    public Order OrderTest { get; private set; } = new Order();
+
+
+    public void ShowConfigurePizzaDialog(PizzaSpecial special)
+    {
+        ConfiguringPizza = new Pizza()
+        {
+            Special = special,
+            SpecialId = special.Id,
+            Size = Pizza.DefaultSize,
+            Toppings = new List<PizzaTopping>(),
+        };
+
+        ShowingConfigureDialog = true;
+    }
+
     public void CancelConfigurePizzaDialog()
     {
         ConfiguringPizza = null;

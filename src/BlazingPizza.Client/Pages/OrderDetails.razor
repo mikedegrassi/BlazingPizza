@@ -1,10 +1,8 @@
 ﻿@page "/myorders/{orderId:int}"
-@* @attribute [Authorize] *@
+@implements IDisposable
 @using System.Threading
 @inject OrdersClient OrdersClient
-@implements IDisposable
 
-<PageTitle>Blazing Pizza - Order Details</PageTitle>
 
 <div class="main">
     @if (invalidOrder)
@@ -46,6 +44,11 @@
     bool invalidOrder;
     CancellationTokenSource pollingCancellationToken;
 
+    void IDisposable.Dispose()
+    {
+        pollingCancellationToken?.Cancel();
+    }
+
     protected override void OnParametersSet()
     {
         // If we were already polling for a different order, stop doing so
@@ -65,15 +68,7 @@
             {
                 orderWithStatus = await OrdersClient.GetOrder(OrderId);
                 StateHasChanged();
-
-                if (orderWithStatus.IsDelivered)
-                {
-                    pollingCancellationToken.Cancel();
-                }
-                else
-                {
-                    await Task.Delay(4000);
-                }
+                await Task.Delay(4000);
             }
             catch (AccessTokenNotAvailableException ex)
             {
@@ -88,10 +83,5 @@
                 StateHasChanged();
             }
         }
-    }
-
-    void IDisposable.Dispose()
-    {
-        pollingCancellationToken?.Cancel();
     }
 }
